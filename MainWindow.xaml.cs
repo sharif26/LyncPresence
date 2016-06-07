@@ -450,20 +450,19 @@ namespace PresencePublication
 */
         private void SendEmail( string msg ) 
         {
-            // Command line argument must the the SMTP host.        sahmed@chesterfield.mo.us
-            MailAddress to = new MailAddress("sahmed@chesterfield.mo.us");
-            //MailAddress to = new MailAddress("shiarif@gmail.com");
-            MailAddress from = new MailAddress("pvtd@chesterfield.mo.us");
-            //MailAddress from = new MailAddress("shiarif@gmail.com");
+            // Command line argument must the the SMTP host.        
+            //put TO email address here
+            MailAddress to = new MailAddress("");
+            //put FROM email address here
+            MailAddress from = new MailAddress("");
+            
             MailMessage message = new MailMessage(from, to);
             message.Subject = "User is: " + msg;
             message.Body = @"Using this new feature, you can send an e-mail message from an application very easily.";
             // Use the application or machine configuration to get the 
             // host, port, and credentials.
-            SmtpClient client = new SmtpClient("email.chesterfield.mo.us");
-            //SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-            //client.Credentials = new NetworkCredential("shiarif@gmail.com", "");
-            //client.EnableSsl = true;
+            //put SMTP server address here
+            SmtpClient client = new SmtpClient("");
             Console.WriteLine("Sending an e-mail message to {0} at {1} by using the SMTP host={2}.",
                 to.User, to.Host, client.Host);
             try
@@ -486,7 +485,8 @@ namespace PresencePublication
                 WebRequest request = WebRequest.Create("https://www.google.com/voice/b/0/sms/send/");
                 // Set the Method property of the request to POST.
                 request.Method = "POST";
-                request.Proxy = new WebProxy("http://192.168.10.2:8080", true, null, CredentialCache.DefaultCredentials);
+                //put proxy info here in format like "http://IP:PORT
+                request.Proxy = new WebProxy(", true, null, CredentialCache.DefaultCredentials); //last param is essential for proxy authentication
 
                 //request.Headers.Add("", "");
                 request.Headers.Add("origin", "https://www.google.com");
@@ -496,13 +496,14 @@ namespace PresencePublication
 //                request.Headers.Add("accept", "*/*");
 //                request.Headers.Add("referer", "https://www.google.com/voice/b/0");
                 request.Headers.Add("authority", "www.google.com");
-//                request.Headers.Add("cookie", "gv=DQAAABkBAACsEqx1OpupDSjkcY3VPnVrErJMiB2K0kB3otoFtm5hO3d3XrFYGHnqLksoWOrK6asFmn9goZju1iIhyi0MoAaHQ8_6TuC9UQoaPMybA6gU4I2exCDw_Huep994aP-22ulBQcyCPZQqAisjze1Stb_pqaQj2bR6bHJ_U3MtbnD1kPhVwO2VKCEucGOSdi5ATBdS6xuTuAz0UfLdmSmqJMD487vtV-WAH1qKXs47Bqw9sgsiAbGzeZYKt1_GncsDXj6aOhy8ggM5wxaRsM7cXBWReN9x7ZeaEpCqoJ4bJ2x9vEk-Hmzw_I_duHDmk-g3eulYUJ5wM8o-Vq7HoOUWAqC22XQ4k0YpEw4sfLlRyhHhA5mnewBjtaMpKx_a-6LPD7A; GMAIL_RTT=30; SID=DQAAABcBAACWB23GkBaekFv__Puscz1qOFo6scjaGVgmzaIgMBMnIlclD0hiv-uq2kktrNkDRCq5QStNQBxcK58w93jWhOWYzfJdCsPuf2Sjwy79ARpEaRcIqduCiZLTcM5M8DDdC5o2XEhMk12TDKn3Kb0E1NtAEC6Jm-sF_wlLI5c6LdxinQtydLp3mDB0P_i6_VUo22jcFCRtsq3RKOQZSmxqtvSIXjYNBCw-SgzCOmgGkaso2tGSHTYk6PksA_hC322A63t9-zZQdXcLw27GoTsaHBwfziWyFNNJI8PR_frrmsVc8B5fLa6Qj2R6MKWUwUTnZ-CKCphP0_5eWzlRRq_TmPvODAX1gnVgUul7Tg8pK3e1Jd3Xpxk_LierEWF17zYJAfE; HSID=AFtyR9N0TDkzIiUNJ; SSID=AIs-owof1hcFZC_fG; APISID=hhQASfDc_4wJsPuY/AVsbvzjZLbTmZPikE; SAPISID=EV1WT_8J0k2ttLCO/AL5NYIqqGeyqVi73s; NID=78=SbBi4DGNmgnwyCLoL8SP0qirzc10NQSCAMe8yTgIZuPuCDMlzG3d3kEgQ68jmoSTzP08cyUTIThsDDygzfCphlk9b6Lc_o9HFIubi25hMfKgDFZYYv_2pST37z1YRRa6jOA5DUj9JREoEdSfDRkkIzMuw3phEnSPsbwlDwc1JE8q_qpv7nlzp_LlY1iNz7lx73yM6vvK0onX; S=grandcentral=vxGYgHfWuYe9JH7knwfrmw; _ga=GA1.1.331231560.1460046787; _gat=1");
-                request.Headers.Add("cookie", "gv=RAPedRgPlHnmTkiHqg4Zy63ebNhRtO4KxHqPWM0T64h4-_cNGcadUidriFt0mp6q-jslkA.; GMAIL_RTT=28; SID=RAPedX6vm8ZsR8lDeqGBzfGlEfTP3NJvvaC5gh5pyVPR1UbA-d4cMy9_ZhvufHgmO6FpWQ.; HSID=A1UF4MF2g6YxGTLMZ; SSID=A_9YmujmhwMKGuy2y; APISID=CHDdJgDgmkNHE7Wq/Akjn8KhUoE-MuHK28; SAPISID=oGVtA_6tSoZlFVA1/A1VLjslvZMvp93EmJ; NID=79=aBquJKxgpBePiG0AQ9JuHm8nnxxzKxozvgQIrPGKJB3uATy9evDv9mb3eti0y8Bu1awVSHW8K0NS1mChDtVGsVDVmsuC2E2NtAGa8GvW7J4nGklA0aGYDRKQQaE6PWPPi8edYCq4bkfjMWRfDzav0gubVLEm8RMLwCrYU7ynqMCNNoo0-N-5MwgaKl2a7zBWYRd9XKiCyUu9; _ga=GA1.1.1424887623.1462985744; _gat=1; S=grandcentral=zj3HARSR5yOK4k36lvonUw");
+                //for security reason, cookie info are removed, but should be able to get that from chrome dev tools, network tab; monitor when sending sms
+                request.Headers.Add("cookie", "");
 //                request.Headers.Add("x-client-data", "CKW2yQEIxLbJAQi1lMoBCP2VygE=");
 
                 // Create POST data and convert it to a byte array.
-                string postData = "id=9bb534e53c1ca5b97d64290d5c6f2abbf1cf2856&phoneNumber=%2B15734790167&conversationId=9bb534e53c1ca5b97d64290d5c6f2abbf1cf2856&text=" +
-                    text+"&contact=Sharif%20Ahmed&_rnr_se=ld0M4R%2FX5GjhRJxxEJIij1lb3AI%3D";
+                //for security reason, post data are also removed, but similarly should be able to get that from chrome dev tools, network tab; monitor when sending sms
+                string postData = "" +
+                    text+"";
                 byte[] byteArray = Encoding.UTF8.GetBytes(postData);
                 // Set the ContentType property of the WebRequest.
                 request.ContentType = "application/x-www-form-urlencoded;charset=UTF-8";
@@ -637,12 +638,15 @@ namespace PresencePublication
                 lyncClient.Self.Contact.ContactInformationChanged +=
                     new EventHandler<ContactInformationChangedEventArgs>(SelfContact_ContactInformationChanged);
 
-                peer = lyncClient.ContactManager.GetContactByUri("sip:sdecker@chesterfield.mo.us");
+                //put email address who you want to monitor in format like sip:username@company.com
+                peer = lyncClient.ContactManager.GetContactByUri("");
                 peer.ContactInformationChanged += new EventHandler<ContactInformationChangedEventArgs>(PeerContact_ContactInformationChanged);
                 ContactAvailability pca = (ContactAvailability)peer.GetContactInformation(ContactInformationType.Availability);
                 if (pca == ContactAvailability.Away ||pca == ContactAvailability.Offline) { isAwayS = true; }
                 Console.WriteLine("S: " + pca + ",isAwayS: " + isAwayS);
-                peer2 = lyncClient.ContactManager.GetContactByUri("sip:mhaug@chesterfield.mo.us");
+                
+                 //put email address who you want to monitor in format like sip:username@company.com
+                peer2 = lyncClient.ContactManager.GetContactByUri("");
                 peer2.ContactInformationChanged += new EventHandler<ContactInformationChangedEventArgs>(Peer2Contact_ContactInformationChanged);
                 pca = (ContactAvailability)peer2.GetContactInformation(ContactInformationType.Availability);
                 if (pca == ContactAvailability.Away) { isAwayM = true; }
